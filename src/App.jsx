@@ -1,18 +1,42 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 
 const Card = ({ title }) => {
-  const [hasLiked, setHasLiked] = useState({ initialState: false});
+
+  //this one in tutorial has initialState: false
+  //it might be using a different style or format
+  //could be using typeScript? will review
+  // TODO: review the Type Script looking codes to see
+  const [hasLiked, setHasLiked] = useState( false);
+
+  const [count, setCount] = useState(0);
+
+  //if [] then will run once when component mounts
+  useEffect(() => {
+    console.log(`${title} has been ${hasLiked}`)
+  }, [hasLiked])
 
   return ( 
-    <div className="card">
-      <h2>{title}</h2>
+    //you don't want to directly access the state itself but use the previous state to increase the count
+    // Bad: Might miss updates
+/*     const handleClick = () => {
+      setCount(count + 1);  // Uses potentially stale 'count'
+      setCount(count + 1);  // Still uses same stale 'count'
+    }
 
-      <button onClick={ () => setHasLiked(true)  } >
-        Like
+    // Good: Guarantees sequential updates
+    const handleClick = () => {
+      setCount(prevState => prevState + 1);  // First update
+      setCount(prevState => prevState + 1);  // Second update
+    } */
+    <div className="card" onClick = {() => setCount((prevState) => prevState + 1)} >
+      <h2>{title} <br /> { count || null }</h2>
+
+      <button onClick={ () => setHasLiked(!hasLiked)  } >
+        { hasLiked ? '❤️' : '🤍' }
       </button>
     </div>
   )
