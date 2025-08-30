@@ -3,6 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import { mockMovies } from './mockData';
+
 import Search from './components/Search.jsx';
 
 // API - application programming interface that allows 
@@ -24,15 +26,50 @@ const App = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [movieList, setMovieList] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchMovies = async () => {
+    setIsLoading(true);
+
+    setErrorMessage('');
+
     try {
+
+      const endpoint = `${API_BASE_URL}etc`;
+
+/* The Movie DB API Key not yet available so generating mock data
+ hopefully, will get the API Key soon
+*/
+      //const response = await fetch(endpoint, API_OPTIONS);
+
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Use mock data instead of API call
+      const data = mockMovies;
+
+      /* if (!response.ok) {
+        throw new Error('Failed to fetch movies');
+      }
+
+      if (data.Response === false) {
+        setErrorMessage(data.Error || 'Failed to fetch movies');
+        setMovieList([]);
+        return;
+      } */
+
+      setMovieList(data.results || []);
+
 
     } catch (error) {
 
       console.log(`Error fetching movies: ${error}`);
       setErrorMessage(`sorry error: ${error}`);
 
+    } finally {
+      setIsLoading(false);
     }
 
   }
@@ -40,9 +77,11 @@ const App = () => {
   useEffect( 
     () => {
 
-    }, []
+      fetchMovies();
 
+    }, []
   );
+
   return (
     <main>
       <div className="pattern" />
@@ -61,8 +100,33 @@ const App = () => {
         <section className="all-movies">
           <h2>All Movies</h2>
 
-          {errorMessage && 
-            <p className="text-red-500">{errorMessage}</p>}
+          {isLoading ? (<p className='text-white'>Loading...</p>)
+
+          :
+          
+          errorMessage ? 
+            (<p className="text-red-500">{errorMessage}</p>) 
+            
+            : (
+              <ul>
+                {
+                  movieList.map((movie) =>
+                  (
+                    <p>{movie.title}</p>
+
+
+                  )
+                  )
+
+                }
+
+              </ul>
+            )
+
+          }
+
+
+     
 
         </section>
 

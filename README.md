@@ -1,12 +1,24 @@
 # movienight
 
-list movies with ratings using api. just some fun movies.
+The following is to help those who might be following tutorials and to help get a sense of timing and planning. It's also for personal learning and educational purposes. If you happen to stumble on here, welcome.
 
-part of tutorial testing some codes using React
+## **Overall Game Plan**
+This project is based on a JavaScript Mastery YouTube tutorial. I'm documenting the process to understand the time investment needed for both personal learning and student guidance.
 
-intial welcome is in the welcomelikecount branch
+The tutorial covers:
+- Building a movie search application using React
+- Integration with themoviedb API
+- Implementation of AppWrite
+- Modern React development practices
 
-this one is the main
+Original tutorial length: ~2 hours
+Expected completion time: 6-10 hours (3x-5x original length)
 
-adding some assets pictures
+## **Actual Reality**
+_Timeline tracking will be updated as the project progresses..._
 
+### Tech Stack:
+- React
+- Vite
+- themoviedb API
+- AppWrite
