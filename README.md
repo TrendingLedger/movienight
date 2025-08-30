@@ -8,5 +8,5 @@ intial welcome is in the welcomelikecount branch
 
 this one is the main
 
-
+adding some assets pictures
 
