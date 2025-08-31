@@ -6,6 +6,8 @@ import './App.css'
 import { mockMovies } from './mockData';
 
 import Search from './components/Search.jsx';
+import Spinner from './components/Spinner.jsx'  // Add this line
+import MovieCard from './components/MovieCard.jsx'
 
 // API - application programming interface that allows 
 // applications to "talk" with each other
@@ -30,25 +32,37 @@ const App = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (query = '') => {
     setIsLoading(true);
 
     setErrorMessage('');
 
     try {
 
-      const endpoint = `${API_BASE_URL}etc`;
+      
 
-/* The Movie DB API Key not yet available so generating mock data
- hopefully, will get the API Key soon
-*/
+      /* The Movie DB API Key not yet available so generating mock data
+      hopefully, will get the API Key soon
+      */
+
+      //depends on query exist or not. the base url and search vs discover
+      //this is if API was working there would be a bit more.
+      //const endpoint = `${API_BASE_URL}etc`;
+
       //const response = await fetch(endpoint, API_OPTIONS);
 
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       // Use mock data instead of API call
-      const data = mockMovies;
+      // Filter movies if query exists
+      const data = query
+        ? {
+            results: mockMovies.results.filter(movie =>
+              movie.title.toLowerCase().includes(query.toLowerCase())
+            )
+          }
+        : mockMovies;
 
       /* if (!response.ok) {
         throw new Error('Failed to fetch movies');
@@ -77,9 +91,9 @@ const App = () => {
   useEffect( 
     () => {
 
-      fetchMovies();
+      fetchMovies(searchTerm);
 
-    }, []
+    }, [searchTerm]
   );
 
   return (
@@ -98,9 +112,9 @@ const App = () => {
         </header>
 
         <section className="all-movies">
-          <h2>All Movies</h2>
+          <h2 className="mt-[40px]">All Movies</h2>
 
-          {isLoading ? (<p className='text-white'>Loading...</p>)
+          {isLoading ? (<Spinner />)
 
           :
           
@@ -110,10 +124,11 @@ const App = () => {
             : (
               <ul>
                 {
+                  //you don't have to write return with () versus { }
+                  //provide a key to make it unique
                   movieList.map((movie) =>
                   (
-                    <p>{movie.title}</p>
-
+                    <MovieCard key={movie.id} movie={movie} />
 
                   )
                   )
