@@ -52,7 +52,7 @@ const App = () => {
       //const response = await fetch(endpoint, API_OPTIONS);
 
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 100));
       
       // Use mock data instead of API call
       // Filter movies if query exists
